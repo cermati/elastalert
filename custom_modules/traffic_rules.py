@@ -57,7 +57,7 @@ class TrafficComparation(RuleType):
         )
 
     def add_count_data(self, data):
-        (ts, current_hits), = data.items()
+        (ts, current_hits) = data.items()
 
         delay = self.rules['query_delay']
         if delay:

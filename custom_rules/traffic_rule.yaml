@@ -8,7 +8,7 @@ use_count_query: true
 use_count_query_with_buffer: true
 doc_type: log
 
-# Define deviation that accept in rule, can be negative value
+# Define deviation that accepted in the rules, can be negative value
 deviation: -0.25
 
 # Default match rule is growth percentage > deviation
