@@ -101,7 +101,7 @@ class TrafficComparation(RuleType):
         elastalert_logger.info(message)
 
         if self.rules['record_index']:
-            index = self.rules['record_index'] + '-' + time.strftime("%Y-%m-%d")
+            index = self.rules['record_index'] + '-' + time.strftime("%Y.%m.%d")
             event['tags'] = 'traffic_record'
             self.es.index(index=index, doc_type='log', body=event)
 
