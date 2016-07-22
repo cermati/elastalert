@@ -3,6 +3,7 @@ from elastalert.elastalert import ElastAlerter
 from datetime import datetime, timedelta
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import ElasticsearchException
+import time
 import yaml
 import os
 import logging
@@ -57,7 +58,7 @@ class TrafficComparation(RuleType):
         )
 
     def add_count_data(self, data):
-        (ts, current_hits) = data.items()
+        (ts, current_hits), = data.items()
 
         delay = self.rules['query_delay']
         if delay:
@@ -96,7 +97,13 @@ class TrafficComparation(RuleType):
             '@timestamp': ts
         }
 
-        elastalert_logger.info(TrafficComparation.create_log_message(event))
+        message = TrafficComparation.create_log_message(event)
+        elastalert_logger.info(message)
+
+        if self.rules['record_index']:
+            index = self.rules['record_index'] + '-' + time.strftime("%Y-%m-%d")
+            event['tags'] = 'traffic_record'
+            self.es.index(index=index, doc_type='log', body=event)
 
         if self.rules['negative_growth']:
             if changed_percentage < self.rules['deviation']:

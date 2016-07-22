@@ -7,6 +7,7 @@ index: filebeat-*
 use_count_query: true
 use_count_query_with_buffer: true
 doc_type: log
+record_index: filebeat
 
 # Define deviation that accepted in the rules, can be negative value
 deviation: -0.25
